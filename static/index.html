@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CP Advisor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css?v=4">
+</head>
+<body>
+    <div class="glass-bg"></div>
+    <div class="container">
+        <header>
+            <h1>AI-Driven CP Advisor</h1>
+            <p>Enter your Codeforces handle to generate analysis</p>
+        </header>
+
+        <main>
+            <section class="input-section">
+                <form id="analyzeForm">
+                    <input type="text" id="handleInput" placeholder="Enter Codeforces Handle" required>
+                    <button type="submit" id="analyzeBtn">Analyze Metrics</button>
+                </form>
+                <div id="loading" class="hidden">
+                    <div class="spinner"></div>
+                    <p>Fetching API Data and Generating AI Hints...</p>
+                </div>
+                <div id="error" class="hidden error-msg"></div>
+            </section>
+
+            <section id="resultsSection" class="hidden">
+                <div class="dashboard-grid">
+                    <!-- Behavioral Profile -->
+                    <div class="glass-panel profile-panel">
+                        <h2>Behavioral Profile</h2>
+                        <div id="profileContent"></div>
+                    </div>
+
+                    <!-- Weaknesses -->
+                    <div class="glass-panel weaknesses-panel">
+                        <h2>Identified Weaknesses</h2>
+                        <ul id="weaknessesList" class="tag-list"></ul>
+                    </div>
+                </div>
+
+                <!-- Training Matrix -->
+                <div class="glass-panel matrix-panel">
+                    <h2>Weekly Training Matrix</h2>
+                    <div class="table-container">
+                        <table id="trainingMatrix">
+                            <thead>
+                                <tr>
+                                    <th>Day</th>
+                                    <th>Focus Area</th>
+                                    <th>Objective</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Socratic AI Feedback -->
+                <div class="glass-panel socratic-panel gradient-border">
+                    <h2 style="margin-bottom:0.8rem;"><span class="sparkle">✨</span> AI Socratic Tutor</h2>
+                    <p class="subtitle" id="aiFeedbackContext">Latest Failed Attempt Analysis</p>
+                    <div id="aiFeedbackContent" class="feedback-levels">
+                        <!-- Instantiated dynamically -->
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="/app.js?v=4"></script>
+</body>
+</html>
