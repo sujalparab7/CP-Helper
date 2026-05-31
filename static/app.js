@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const errorDiv = document.getElementById('error');
     const resultsSection = document.getElementById('resultsSection');
 
-    // Content containers
     const profileContent = document.getElementById('profileContent');
     const weaknessesList = document.getElementById('weaknessesList');
     const trainingMatrix = document.querySelector('#trainingMatrix tbody');
@@ -23,7 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
         loading.classList.remove('hidden');
 
         try {
-            const response = await fetch(`/api/analyze?handle=${encodeURIComponent(handle)}`);
+            const baseUrl = window.location.protocol === 'file:' ? 'http://localhost:8080' : '';
+            const response = await fetch(`${baseUrl}/api/analyze?handle=${encodeURIComponent(handle)}`);
             const data = await response.json();
 
             if (!response.ok) {
@@ -40,14 +40,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function renderDashboard(data) {
-        // 1. Behavioral Profile
         profileContent.innerHTML = `
             <p style="margin-bottom: 0.5rem"><strong>Overall Status:</strong> ${data.profile.status}</p>
             <p style="margin-bottom: 0.5rem"><strong>Submission Cadence:</strong> <span style="color:var(--accent-color)">${data.profile.cadence}</span></p>
             <p><strong>Diagnosis:</strong> <span style="color:var(--text-secondary)">${data.profile.notes}</span></p>
         `;
 
-        // 2. Weaknesses
         weaknessesList.innerHTML = '';
         if (data.weaknesses && data.weaknesses.length > 0) {
             data.weaknesses.forEach(w => {
@@ -60,7 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
             weaknessesList.innerHTML = '<li class="tag">No major weaknesses identified yet.</li>';
         }
 
-        // 3. Training Matrix
         trainingMatrix.innerHTML = '';
         if (data.matrix && data.matrix.length > 0) {
             data.matrix.forEach(day => {
@@ -75,7 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // 4. Socratic AI Feedback
         aiFeedbackContent.innerHTML = '';
         if (data.aiFeedback) {
             aiFeedbackContext.innerHTML = `<strong>Context:</strong> Failed submission on Problem <em>${data.aiFeedback.problemName}</em>`;

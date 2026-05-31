@@ -49,7 +49,6 @@ func AnalyzeUser(handle string) (*AnalysisResult, error) {
 		return nil, fmt.Errorf("no submissions found for user %s", handle)
 	}
 
-	// Group submissions by contest chronologically
 	var uniqueContests []int
 	contestMap := make(map[int][]CFSubmission)
 	for _, sub := range subs {
@@ -61,7 +60,6 @@ func AnalyzeUser(handle string) (*AnalysisResult, error) {
 
 	var subsToAnalyze []CFSubmission
 	
-	// Search up to 5 recent contests for one holding algorithmic failures
 	for i := 0; i < len(uniqueContests) && i < 5; i++ {
 		cid := uniqueContests[i]
 		cSubs := contestMap[cid]
@@ -80,7 +78,6 @@ func AnalyzeUser(handle string) (*AnalysisResult, error) {
 		}
 	}
 
-	// Fallback to the most recent contest if literally no failures exist in the previous 5 attempts
 	if len(subsToAnalyze) == 0 {
 		subsToAnalyze = contestMap[uniqueContests[0]]
 	}
@@ -110,7 +107,6 @@ func AnalyzeUser(handle string) (*AnalysisResult, error) {
 		}
 
 		if i < len(subsToAnalyze)-1 {
-			// Only measure cadence between repetitive submissions on the EXACT same problem!
 			if subsToAnalyze[i].Problem.Name == subsToAnalyze[i+1].Problem.Name {
 				delta := subsToAnalyze[i].CreationTimeSeconds - subsToAnalyze[i+1].CreationTimeSeconds
 				if delta > 0 && delta < 3600 {

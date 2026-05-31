@@ -31,11 +31,9 @@ func loadEnv() {
 func main() {
 	loadEnv()
 
-	// Serve static files
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/", fs)
 
-	// API endpoints
 	http.HandleFunc("/api/analyze", handlers.HandleAnalyze)
 
 	log.Println("Server listening on :8080...")

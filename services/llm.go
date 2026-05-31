@@ -40,7 +40,6 @@ type GeminiResponse struct {
 func GenerateAIFeedback(problem CFProblem, lang string, verdict string, code string, weaknesses []Weakness) AIFeedback {
 	apiKey := os.Getenv("GEMINI_API_KEY")
 
-	// Fallback to mock only if API key is literally missing
 	if apiKey == "" {
 		return GenerateMockFeedback(problem, lang)
 	}
@@ -150,7 +149,6 @@ Analyze the common pitfalls for this algorithmic problem. Act strictly as a Socr
 
 	responseText := gemResp.Candidates[0].Content.Parts[0].Text
 
-	// Robust markdown block cleanup
 	responseText = strings.TrimSpace(responseText)
 	if strings.HasPrefix(responseText, "```json") {
 		responseText = strings.TrimPrefix(responseText, "```json")

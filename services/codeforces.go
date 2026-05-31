@@ -54,7 +54,6 @@ type CFMember struct {
 	Name   string `json:"name,omitempty"`
 }
 
-// FetchUserSubmissions fetches recent submissions for a specific handle
 func FetchUserSubmissions(handle string) ([]CFSubmission, error) {
 	url := fmt.Sprintf("https://codeforces.com/api/user.status?handle=%s&from=1&count=200", handle)
 
@@ -82,7 +81,6 @@ func FetchUserSubmissions(handle string) ([]CFSubmission, error) {
 	return cfResp.Result, nil
 }
 
-// FetchSubmissionCode scrapes the actual code of a submission
 func FetchSubmissionCode(contestId int, submissionId int) (string, error) {
 	url := fmt.Sprintf("https://codeforces.com/contest/%d/submission/%d", contestId, submissionId)
 	client := &http.Client{Timeout: 10 * time.Second}
@@ -116,7 +114,6 @@ func FetchSubmissionCode(contestId int, submissionId int) (string, error) {
 	code = strings.ReplaceAll(code, "&quot;", "\"")
 	code = strings.ReplaceAll(code, "&amp;", "&")
 	
-	// Add arbitrary length check against extremely large files
 	if len(code) > 20000 {
 		code = code[:20000]
 	}
