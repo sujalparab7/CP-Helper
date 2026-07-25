@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         loading.classList.remove('hidden');
 
         try {
-            const baseUrl = window.location.protocol === 'file:' ? 'https://cp-helper.sujal-arena.duckdns.org' : '';
+            const baseUrl = window.location.protocol === 'file:' ? 'https://sujal-cp-helper.duckdns.org' : '';
             const response = await fetch(`${baseUrl}/api/analyze?handle=${encodeURIComponent(handle)}`);
             const data = await response.json();
 
